@@ -1,10 +1,10 @@
-package com.example.javaexceptionhandling;
+package com.carlost.fibonacci;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class JavaExceptionHandlingApplicationTests {
+class FibonacciApplicationTests {
 
     @Test
     void contextLoads() {
