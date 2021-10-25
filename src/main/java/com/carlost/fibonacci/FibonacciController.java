@@ -27,6 +27,9 @@ public class FibonacciController {
      * @return fibonacci number at position (i.e. 21)
      */
     private int fibonacci(int position) {
+        if (position <= 1) {
+            return position;
+        }
         return fibonacci(position - 1) + fibonacci(position - 2);
     }
 }
