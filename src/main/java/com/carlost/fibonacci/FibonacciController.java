@@ -1,14 +1,64 @@
 package com.carlost.fibonacci;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("fibonacci")
 public class FibonacciController {
+
+    @PostMapping("createSequence")
+    public ResponseEntity<String> generateFibonacciSequence(@RequestParam int n) throws IOException {
+        List<Integer> sequence = getSequence(n);
+        return ResponseEntity.ok(storeSequence(sequence));
+    }
+
+    /**
+     * Generate fibonacci sequence without using recursion
+     *
+     * @param n number of numbers that should be included in the fibonacci sequence
+     * @return list of integers with fibonacci sequence
+     */
+    private List<Integer> getSequence(int n) {
+        List<Integer> sequence = new ArrayList<>();
+        sequence.add(0);
+        int prev = 0;
+        int curr = 1;
+        int index = 1;
+        while (index <= n) {
+            sequence.add(curr);
+            int next = prev + curr;
+            prev = curr;
+            curr = next;
+            index++;
+        }
+        return sequence;
+    }
+
+    /**
+     * Save the fibonacci sequence in a txt file
+     *
+     * @param sequence list of ints in the fibonacci sequence
+     * @return String name of the file saved
+     */
+    private String storeSequence(List<Integer> sequence) throws IOException {
+        String name = "fibonacci.txt";
+        File file = new File(name);
+
+        file.createNewFile();
+        FileWriter writer = new FileWriter(file);
+        writer.write(sequence.toString());
+        writer.flush();
+        writer.close();
+        return name;
+    }
+
     /**
      * Determine the n-th fibonacci number
      *
